@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using timesheet.business;
+using timesheet.data;
 
 namespace timesheet.api.controllers
 {
@@ -12,10 +13,12 @@ namespace timesheet.api.controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
+        private readonly TimesheetDb _db;
         private readonly EmployeeService employeeService;
-        public EmployeeController(EmployeeService employeeService)
+        public EmployeeController(TimesheetDb db)
         {
-            this.employeeService = employeeService;
+            _db = db;
+            this.employeeService = new EmployeeService(_db);
         }
 
         [HttpGet("getall")]
